@@ -1,0 +1,62 @@
+{
+	"levels":[
+		{
+			"colors":[{"r":253, "g":61, "b":83, "a":255}, {"r":252, "g":200, "b":186, "a":255},
+				{"r":241, "g":30, "b":105, "a":255}, {"r":250, "g":163, "b":167, "a":255},
+				{"r":251, "g":140, "b":138, "a":255},{"r":219, "g":27, "b":81, "a":255}],
+			"goal_sum": 35,
+			"goal_score": -1,
+			"limit_step": 25,
+			"limit_time": -1,
+			"sum_formula": "jsonObj.levels[0].goal_sum - 2 * (i % 10)",
+			"step_formula": "jsonObj.levels[0].goal_sum - (i % 10)"
+
+		},  
+		{
+			"colors":[{"r":252, "g":140, "b":138, "a":255}, {"r":250, "g":207, "b":207, "a":255},
+				{"r":239, "g":124, "b":139, "a":255}, {"r":250, "g":213, "b":132, "a":255},
+				{"r":248, "g":188, "b":143, "a":255},{"r":224, "g":81, "b":87, "a":255}],
+			"goal_sum": 35,
+			"goal_score": 1000,
+			"limit_step": -1,
+			"limit_time": -1,
+			"sum_formula": "jsonObj.levels[1].goal_sum - 2 * (i % 10)",
+			"scroce_formula": "jsonObj.levels[1].goal_score + 100 * (i % 10)"
+		},
+		{
+			"colors":[{"r":250, "g":173, "b":197, "a":255}, {"r":243, "g":134, "b":155, "a":255},
+				{"r":229, "g":242, "b":232, "a":255}, {"r":193, "g":224, "b":183, "a":255},
+				{"r":136, "g":209, "b":208, "a":255},{"r":1, "g":186, "b":206, "a":255}],
+			"goal_sum": 35,
+			"goal_score": 1000,
+			"limit_step": 20,
+			"limit_time": -1,
+			"sum_formula": "jsonObj.levels[2].goal_sum - 2 * (i % 10)",
+			"step_formula": "jsonObj.levels[2].goal_sum - (i % 10)",
+			"scroce_formula": "jsonObj.levels[2].goal_score + 100 * (i % 10)"
+		},
+		{
+			"colors":[{"r":250, "g":207, "b":207, "a":255}, {"r":224, "g":183, "b":189, "a":255},
+				{"r":172, "g":151, "b":166, "a":255}, {"r":177, "g":196, "b":203, "a":255},
+				{"r":170, "g":171, "b":173, "a":255},{"r":149, "g":136, "b":127, "a":255}],
+			"goal_sum": 35,
+			"goal_score": -1,
+			"limit_step": -1,
+			"limit_time": 160,
+			"sum_formula": "jsonObj.levels[3].goal_sum - 2 * (i % 10)",
+			"time_formula": "jsonObj.levels[3].limit_time - 10 * (i % 10)"
+		},
+		{
+			"colors":[{"r":252, "g":228, "b":186, "a":255}, {"r":251, "g":189, "b":150, "a":255},
+				{"r":247, "g":152, "b":158, "a":255}, {"r":243, "g":134, "b":155, "a":255},
+				{"r":247, "g":189, "b":86, "a":255},{"r":240, "g":77, "b":60, "a":255}],
+			"goal_sum": 35,
+			"goal_score": -1,
+			"limit_step": 20,
+			"limit_time": 160,
+			"sum_formula": "jsonObj.levels[4].goal_sum - 2 * (i % 10)",
+			"step_formula": "jsonObj.levels[4].goal_sum - (i % 10)",
+			"time_formula": "jsonObj.levels[4].limit_time - 10 * (i % 10)"
+		}
+	]
+}

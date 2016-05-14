@@ -1,0 +1,72 @@
+{
+    "project_type": "javascript",
+
+    "debugMode" : 1,
+    "showFPS" : false,
+    "frameRate" : 50,
+    "noCache" : false,
+    "id" : "gameCanvas",
+    "renderMode" : 0,
+    "engineDir":"frameworks/cocos2d-html5",
+
+    "modules" : ["cocos2d", "extensions", "external"],
+
+    "jsList" : [
+        "src/resource.js",
+
+
+        "src/libs/bmob.js",
+        "src/libs/av-mini-0.6.4.js",
+        "src/libs/moment.js",
+        "src/configs/Keys.js",
+        "src/utils/Base64.js",
+        "src/utils/XxTea.js",
+        "src/configs/OnOff.js",
+        "src/utils/LogUtil.js",
+        "src/utils/StringUtil.js",
+        "src/utils/CcUtil.js",
+        "src/utils/BmobHelper.js",
+        "src/utils/UmengHelper.js",
+        "src/utils/DataUtil.js",
+        "src/configs/Configs.js",
+
+        "src/utils/AdvertiseUtil.js",
+        "src/utils/TimeUtil.js",
+        "src/utils/TouchUtil.js",
+        "src/utils/GameUtil.js",
+
+        "src/controllers/GameController.js",
+
+        "src/managers/AudioManager.js",
+        "src/managers/ActionManager.js",
+        "src/managers/LevelManager.js",
+        "src/managers/MsgManager.js",
+        "src/managers/PayManager.js",
+        "src/managers/PowerManager.js",
+        "src/managers/PropsManager.js",
+        "src/managers/RankManager.js",
+        "src/managers/SignInManager.js",
+
+        "src/layers/LayerBase.js",
+        "src/layers/PopLayerBase.js",
+        "src/layers/LoadingLayer.js",
+
+        "src/scenes/LoaderScene.js",
+        "src/scenes/MainScene.js",
+        "src/scenes/PlayingGameScene.js",
+
+        "src/widgets/PropsScrollView.js",
+        "src/widgets/ChessboardView.js",
+        "src/widgets/ChessCell.js",
+        "src/widgets/GameOverDialog.js",
+        "src/widgets/PauseDialog.js",
+        "src/widgets/SettingsDialog.js",
+        "src/widgets/ConfirmExitDialog.js",
+        "src/widgets/MarkLayer.js",
+        "src/widgets/PureColorButton.js",
+        "src/widgets/LevelCard.js",
+
+        "src/app.js"
+
+    ]
+}

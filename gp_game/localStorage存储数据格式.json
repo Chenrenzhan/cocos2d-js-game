@@ -1,0 +1,12 @@
+{
+	"channel_id": -1, // 用户所属的渠道号， -1 表示没有渠道号
+	// levelHightestScore 保存每一关的最高成绩
+	"level_highest_score":[
+
+	],
+	"music": true, // 背景音乐
+	"sound": true, // 音效
+	"current_level" : 1 // 保存当前关卡
+
+
+}
