@@ -28,7 +28,7 @@
   playBgm : ->
     if not @mIsBgOlaying
       cc.audioEngine.playMusic(@mBgMusic, true)
-      @saveIsBgmPlay(true)
+#      @saveIsBgmPlay(true)
       @mIsBgOlaying = true
 
 
@@ -45,7 +45,7 @@
   stopBgm : ->
     if Configs.mIsBgmPlay
       cc.audioEngine.stopMusic()
-      @saveIsBgmPlay(false)
+#      @saveIsBgmPlay(false)
       @mIsBgOlaying = false
 
   saveIsBgmPlay : (isBgmPlay) ->

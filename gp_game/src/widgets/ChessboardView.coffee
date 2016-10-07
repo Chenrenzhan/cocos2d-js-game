@@ -25,6 +25,8 @@
   mOnStepChange           :         null        # 步数改变回调
   mOnScoreChange           :         null        # 得分改变回调
 
+  mReleaseMagicCb           :       null          # 释放魔术棒调用
+
 
 
   ctor : ->
@@ -70,7 +72,7 @@
     @mSwapCells = null
     @mSwapCells = []
     @mChessColorRecord = []
-    @mScoresRecord.length = []
+    @mScoresRecord = []
     @mGoalColorSumRecord = []
 
     for i in [0...Configs.mCellSumX]
@@ -108,9 +110,11 @@
               self.mDownCell = self.mCells[ret.i][ret.j]
               if (self.mDownCell.mColorIndex isnt self.mGoalColorIndex)
                 self.mHadSelectMagic = false
+                self.mReleaseMagicCb()
                 self.useMagic(self.mDownCell)
                 return false
               self.mHadSelectMagic = false
+              self.mReleaseMagicCb()
 
             if self.mDownCell?
 #              self.mDownCell.unselect()
@@ -371,5 +375,8 @@
   # 选择魔术棒
   selectMagic : ->
     @mHadSelectMagic = true
+
+  setReleaseMagicCb : (cb) ->
+    @mReleaseMagicCb = cb
 
 

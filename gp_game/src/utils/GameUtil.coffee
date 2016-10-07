@@ -96,6 +96,7 @@
     以(x, y)作为起点进行扫描被colorIndex颜色包围住的所有颜色块
   ###
   getSurroundCells : (cells, x, y, colorIndex) ->
+#    jlog.i "getSurroundCells x = " + x + "   ;   y = " + y + "   ;  colorIndex = " + colorIndex
     x = parseInt(x)
     y = parseInt(y)
     colorIndex = parseInt(colorIndex)
@@ -243,12 +244,14 @@
 
   # 从配置文件的公式中获取当前关卡的参数
   getFromFormula : (level, key, formula, defaultValue) ->
-    bigLevel = Math.floor(level / 10)
+    # TODO
+    level--
+    bigLevel = Math.floor(level / 5)
     value = parseInt(Configs.mSettings[Keys.LEVELS][bigLevel][key])
     if  value <= 0
       return defaultValue # 返回默认值
     else
-      i = level % 10
+      i = level % 5
       jsonObj = Configs.mSettings
       sum = value
       try

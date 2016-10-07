@@ -25,6 +25,7 @@
     mCellGap: 0,
     mBorderX: 0,
     mBorderY: 0,
+    mStyle: ["Joy", "Sweet", "Romantic", "Meek", "Elegant"],
     ctor: function() {
       if (ccUtil.isNative()) {
         cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.EXACT_FIT);
@@ -58,7 +59,7 @@
     setColors: function(level) {
       var c, color, colors, i, len, results;
       level -= 1;
-      colors = this.mSettings[Keys.LEVELS][Math.floor(level / 10)][Keys.COLORS];
+      colors = this.mSettings[Keys.LEVELS][Math.floor(level / 5)][Keys.COLORS];
       this.mColors = null;
       this.mColors = [];
       results = [];

@@ -32,6 +32,9 @@
     mPauseDialog: null,
     mHadWin: false,
     mHadFails: false,
+    mBtnMagicWand: null,
+    mBtnBackStep: null,
+    mBtnAddStep: null,
     ctor: function(level) {
       this._super();
       this.mCurLevel = level;
@@ -121,61 +124,65 @@
       return this.addChild(this.mPauseDialog, 10);
     },
     addBtnMagicWand: function() {
-      var btn, self;
-      btn = new ccui.Button();
-      btn.loadTextureNormal(resImg.magic_wand, ccui.Widget.LOCAL_TEXTURE);
-      btn.setPressedActionEnabled(true);
-      btn.attr({
+      var self;
+      this.mBtnMagicWand = new ccui.Button();
+      this.mBtnMagicWand.loadTextureNormal(resImg.magic_wand, ccui.Widget.LOCAL_TEXTURE);
+      this.mBtnMagicWand.setPressedActionEnabled(true);
+      this.mBtnMagicWand.attr({
         anchorY: 0,
         x: cc.winSize.width / 4,
         y: 70
       });
-      btn.setTouchEnabled(true);
-      this.addChild(btn, 5);
+      this.mBtnMagicWand.setTouchEnabled(true);
+      this.addChild(this.mBtnMagicWand, 5);
       self = this;
-      return btn.addTouchEventListener(function(touch, event) {
+      this.mChessboard.setReleaseMagicCb(function() {
+        return self.mBtnMagicWand.scale = 1.0;
+      });
+      return this.mBtnMagicWand.addTouchEventListener(function(touch, event) {
         if (event === ccui.Widget.TOUCH_ENDED) {
           AudioManager.playClickAudio();
           jlog.i("魔术棒点击回调");
-          return self.mChessboard.selectMagic();
+          self.mChessboard.selectMagic();
+          return self.mBtnMagicWand.scale = 1.5;
         }
-      }, btn);
+      }, this.mBtnMagicWand);
     },
     addBtnBackStep: function() {
-      var btn, self;
-      btn = new ccui.Button();
-      btn.loadTextureNormal(resImg.back_step, ccui.Widget.LOCAL_TEXTURE);
-      btn.setPressedActionEnabled(true);
-      btn.attr({
+      var self;
+      this.mBtnBackStep = new ccui.Button();
+      this.mBtnBackStep.loadTextureNormal(resImg.back_step, ccui.Widget.LOCAL_TEXTURE);
+      this.mBtnBackStep.setPressedActionEnabled(true);
+      this.mBtnBackStep.attr({
         anchorY: 0,
         x: cc.winSize.width / 4 * 2,
         y: 70
       });
-      btn.setTouchEnabled(true);
+      this.mBtnBackStep.setTouchEnabled(true);
       self = this;
-      this.addChild(btn, 5);
-      return btn.addTouchEventListener(function(touch, event) {
+      this.addChild(this.mBtnBackStep, 5);
+      return this.mBtnBackStep.addTouchEventListener(function(touch, event) {
         if (event === ccui.Widget.TOUCH_ENDED) {
           AudioManager.playClickAudio();
           jlog.i("返回1步点击回调");
           return self.onBackOneStep();
         }
-      }, btn);
+      }, this.mBtnBackStep);
     },
     addBtnAddStep: function() {
-      var btn, self;
-      btn = new ccui.Button();
-      btn.loadTextureNormal(resImg.add_5_step, ccui.Widget.LOCAL_TEXTURE);
-      btn.setPressedActionEnabled(true);
-      btn.attr({
+      var self;
+      this.mBtnAddStep = new ccui.Button();
+      this.mBtnAddStep.loadTextureNormal(resImg.add_5_step, ccui.Widget.LOCAL_TEXTURE);
+      this.mBtnAddStep.setPressedActionEnabled(true);
+      this.mBtnAddStep.attr({
         anchorY: 0,
         x: cc.winSize.width / 4 * 3,
         y: 70
       });
-      btn.setTouchEnabled(true);
+      this.mBtnAddStep.setTouchEnabled(true);
       self = this;
-      this.addChild(btn, 5);
-      return btn.addTouchEventListener(function(touch, event) {
+      this.addChild(this.mBtnAddStep, 5);
+      return this.mBtnAddStep.addTouchEventListener(function(touch, event) {
         if (event === ccui.Widget.TOUCH_ENDED) {
           AudioManager.playClickAudio();
           jlog.i("增加5步点击回调");
@@ -184,7 +191,7 @@
             return umeng.MobClickCpp.use("props-2", 1, 3);
           }
         }
-      }, btn);
+      }, this.mBtnAddStep);
     },
     addLevelLabel: function() {
       this.mLevelTitleLabel = new cc.LabelTTF("关卡数");
@@ -456,19 +463,9 @@
         umeng.MobClickCpp.failLevel("level-" + this.mCurLevel);
       }
       BmobHelper.saveGameFail(Configs.mUserId, this.mCurLevel, this.mScore);
-      this.mOverDialog = new GameOverDialog(resImg.lose, "再来一次");
-      this.addChild(this.mOverDialog, 10);
-      this.mOverDialog.setBtnCallback(function() {
-        self.replayThisLevel();
-        return self.mHadFails = false;
-      });
-      return this.mOverDialog.setHiddenCallback(function() {
-        self.back();
-        return self.mHadFails = false;
-      });
+      return this.onGameOver(this.mCurLevel, 2, this.mScore);
     },
     onGameWin: function() {
-      var self;
       if (this.mHadFails || this.mHasWin) {
         return;
       }
@@ -479,17 +476,8 @@
       }
       DataUtil.saveLevelScore(this.mCurLevel, this.mScore);
       BmobHelper.saveGameWin(Configs.mUserId, this.mCurLevel, this.mScore);
-      this.mOverDialog = new GameOverDialog(resImg.win, "下一关");
-      this.addChild(this.mOverDialog, 10);
-      self = this;
-      this.mOverDialog.setBtnCallback(function() {
-        self.nextLevel();
-        return self.mHasWin = false;
-      });
-      return this.mOverDialog.setHiddenCallback(function() {
-        self.back();
-        return self.mHasWin = false;
-      });
+      jlog.i("@mScore = " + this.mScore);
+      return this.onGameOver(this.mCurLevel, 1, this.mScore);
     },
     replayThisLevel: function() {
       return this.onGameStart(this.mCurLevel);
@@ -498,9 +486,13 @@
       this.mCurLevel++;
       return this.onGameStart(this.mCurLevel);
     },
+    onGameOver: function(level, type, score) {
+      var playScene;
+      playScene = new StartGameScene(level, type, score);
+      return cc.director.runScene(playScene);
+    },
     back: function() {
-      jlog.i("back");
-      return cc.director.runScene(new MainScene());
+      return cc.director.runScene(new MainScene1());
     }
   });
 
@@ -514,7 +506,11 @@
       var layer;
       this._super();
       layer = new PlayingGameLayer(this.mLevel);
-      return this.addChild(layer);
+      this.addChild(layer);
+      return AudioManager.initBgm();
+    },
+    onExit: function() {
+      return AudioManager.stopBgm();
     }
   });
 

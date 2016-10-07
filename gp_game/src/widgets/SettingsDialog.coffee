@@ -58,11 +58,13 @@
     @mMusic = @createToggle(index,
       ->
         jlog.i "打开音乐"
-        AudioManager.playBgm()
+#        AudioManager.playBgm()
+        AudioManager.saveIsBgmPlay(true)
 #        DataUtil.saveMusicSettings(true)
       ->
         jlog.i "关闭音乐"
         AudioManager.stopBgm()
+        AudioManager.saveIsBgmPlay(false)
 #        DataUtil.saveMusicSettings(false)
     )
     @mMusic.attr

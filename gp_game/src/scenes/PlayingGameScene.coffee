@@ -33,6 +33,9 @@ PlayingGameLayer = LayerBase.extend
   mHadWin             :         false       # 记录是否已经完成通过本关
   mHadFails           :         false       # 本关失败
 
+  mBtnMagicWand       :         null
+  mBtnBackStep        :         null
+  mBtnAddStep         :         null
 
 #  mLevels: [{'goal_sum':35,'step_sum':25},{'goal_sum':35,'step_sum':20},{'goal_sum':35,'step_sum':15},{'goal_sum':30,'step_sum':25},{'goal_sum':30,'step_sum':20},{'goal_sum':30,'step_sum':15},{'goal_sum':25,'step_sum':30},{'goal_sum':25,'step_sum':25},{'goal_sum':25,'step_sum':20},{'goal_sum':20,'step_sum':30},{'goal_sum':20,'step_sum':25},{'goal_sum':20,'step_sum':20},{'goal_sum':15,'step_sum':40},{'goal_sum':15,'step_sum':35},{'goal_sum':15,'step_sum':30}]
 
@@ -132,63 +135,65 @@ PlayingGameLayer = LayerBase.extend
 
   # 添加魔术棒按钮
   addBtnMagicWand : ->
-    btn = new ccui.Button()
-    btn.loadTextureNormal(resImg.magic_wand, ccui.Widget.LOCAL_TEXTURE)
-    btn.setPressedActionEnabled true
-    btn.attr
+    @mBtnMagicWand = new ccui.Button()
+    @mBtnMagicWand.loadTextureNormal(resImg.magic_wand, ccui.Widget.LOCAL_TEXTURE)
+    @mBtnMagicWand.setPressedActionEnabled true
+    @mBtnMagicWand.attr
       anchorY : 0
       x: cc.winSize.width / 4
       y: 70
-    btn.setTouchEnabled true
-    @addChild(btn, 5)
+    @mBtnMagicWand.setTouchEnabled true
+    @addChild(@mBtnMagicWand, 5)
     self = @
-    btn.addTouchEventListener (touch, event)->
+    @mChessboard.setReleaseMagicCb(-> self.mBtnMagicWand.scale = 1.0)
+    @mBtnMagicWand.addTouchEventListener (touch, event)->
       if event is ccui.Widget.TOUCH_ENDED
         AudioManager.playClickAudio()
         jlog.i "魔术棒点击回调"
 #        self.mhadSelectMagic = true
         self.mChessboard.selectMagic()
-    , btn
+        self.mBtnMagicWand.scale = 1.5
+    , @mBtnMagicWand
 
   # 添加退1步按钮
   addBtnBackStep : ->
-    btn = new ccui.Button()
-    btn.loadTextureNormal(resImg.back_step, ccui.Widget.LOCAL_TEXTURE)
-    btn.setPressedActionEnabled true
-    btn.attr
+    @mBtnBackStep = new ccui.Button()
+    @mBtnBackStep.loadTextureNormal(resImg.back_step, ccui.Widget.LOCAL_TEXTURE)
+    @mBtnBackStep.setPressedActionEnabled true
+    @mBtnBackStep.attr
       anchorY : 0
       x: cc.winSize.width / 4 * 2
       y: 70
-    btn.setTouchEnabled(true)
+    @mBtnBackStep.setTouchEnabled(true)
     self = @
-    @addChild(btn, 5)
-    btn.addTouchEventListener (touch, event)->
+    @addChild(@mBtnBackStep, 5)
+    @mBtnBackStep.addTouchEventListener (touch, event)->
       if event is ccui.Widget.TOUCH_ENDED
         AudioManager.playClickAudio()
         jlog.i "返回1步点击回调"
         self.onBackOneStep()
-    , btn
+    , @mBtnBackStep
 
   # 添加增加5步按钮
   addBtnAddStep : ->
-    btn = new ccui.Button()
-    btn.loadTextureNormal(resImg.add_5_step, ccui.Widget.LOCAL_TEXTURE)
-    btn.setPressedActionEnabled true
-    btn.attr
+    @mBtnAddStep = new ccui.Button()
+    @mBtnAddStep.loadTextureNormal(resImg.add_5_step, ccui.Widget.LOCAL_TEXTURE)
+    @mBtnAddStep.setPressedActionEnabled true
+    @mBtnAddStep.attr
       anchorY : 0
       x: cc.winSize.width / 4 * 3
       y: 70
-    btn.setTouchEnabled(true)
+    @mBtnAddStep.setTouchEnabled(true)
     self = @
-    @addChild(btn, 5)
-    btn.addTouchEventListener (touch, event)->
+    @addChild(@mBtnAddStep, 5)
+    @mBtnAddStep.addTouchEventListener (touch, event)->
       if event is ccui.Widget.TOUCH_ENDED
         AudioManager.playClickAudio()
         jlog.i "增加5步点击回调"
         self.setStepSum(5)
         if ccUtil.isNative()
           umeng.MobClickCpp.use("props-2", 1, 3)
-    , btn
+    , @mBtnAddStep
 
 
   # 添加显示当前关卡的label
@@ -335,6 +340,7 @@ PlayingGameLayer = LayerBase.extend
     @mLevelLabel.setString(level)
     @mScoreLabel.setString('0')
 #    level = 42
+    # TODO
     level = level % 50
     @mCurLevel = level
     Configs.setColors(level)
@@ -452,20 +458,21 @@ PlayingGameLayer = LayerBase.extend
 
     BmobHelper.saveGameFail(Configs.mUserId, @mCurLevel,  @mScore) # 保存至服务器
 
-    @mOverDialog = new GameOverDialog(resImg.lose, "再来一次")
-    @addChild(@mOverDialog, 10)
-    @mOverDialog.setBtnCallback(->
-      self.replayThisLevel()
-      self.mHadFails = false
-    )
-    @mOverDialog.setHiddenCallback( ->
-      self.back()
-      self.mHadFails = false
-    )
+    @onGameOver(@mCurLevel, 2, @mScore)
+
+#    @mOverDialog = new GameOverDialog(resImg.lose, "再来一次")
+#    @addChild(@mOverDialog, 10)
+#    @mOverDialog.setBtnCallback(->
+#      self.replayThisLevel()
+#      self.mHadFails = false
+#    )
+#    @mOverDialog.setHiddenCallback( ->
+#      self.back()
+#      self.mHadFails = false
+#    )
 
   # 完成本关游戏
   onGameWin : ->
-    # TODO
     if @mHadFails or @mHasWin
       return
     @mHasWin = true
@@ -475,18 +482,20 @@ PlayingGameLayer = LayerBase.extend
     DataUtil.saveLevelScore(@mCurLevel,  @mScore) # 保存到本地
 
     BmobHelper.saveGameWin(Configs.mUserId, @mCurLevel,  @mScore) # 保存至服务器
+    jlog.i "@mScore = " + @mScore
+    @onGameOver(@mCurLevel, 1, @mScore)
 
-    @mOverDialog = new GameOverDialog(resImg.win, "下一关")
-    @addChild(@mOverDialog, 10)
-    self = @
-    @mOverDialog.setBtnCallback(->
-      self.nextLevel()
-      self.mHasWin = false
-    )
-    @mOverDialog.setHiddenCallback( ->
-      self.back()
-      self.mHasWin = false
-    )
+#    @mOverDialog = new GameOverDialog(resImg.win, "下一关")
+#    @addChild(@mOverDialog, 10)
+#    self = @
+#    @mOverDialog.setBtnCallback(->
+#      self.nextLevel()
+#      self.mHasWin = false
+#    )
+#    @mOverDialog.setHiddenCallback( ->
+#      self.back()
+#      self.mHasWin = false
+#    )
 #      self.back()
 
   # 重玩本关
@@ -498,11 +507,13 @@ PlayingGameLayer = LayerBase.extend
     @mCurLevel++
     @onGameStart(@mCurLevel)
 
+  onGameOver : (level, type, score) ->
+    playScene = new StartGameScene(level, type, score)
+    cc.director.runScene(playScene)
+
   # 返回游戏主界面
   back : ->
-    # TODO 返回
-    jlog.i "back"
-    cc.director.runScene(new MainScene())
+    cc.director.runScene(new MainScene1())
 
 @PlayingGameScene = cc.Scene.extend
   mLevel        :         1
@@ -514,7 +525,11 @@ PlayingGameLayer = LayerBase.extend
     this._super()
     layer = new PlayingGameLayer(@mLevel)
     this.addChild(layer)
-#    AudioManager.initBgm()
+    AudioManager.initBgm()
+#    cc.audioEngine.playMusic(resAudio.bg_music, true)
+  onExit : ->
+    AudioManager.stopBgm()
+#    cc.audioEngine.stopMusic()
 
 
 

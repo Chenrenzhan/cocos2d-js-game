@@ -28,7 +28,9 @@
           return target = event.getCurrentTarget();
         },
         onTouchEnded: function(touch, event) {
-          return cbFunc();
+          var target;
+          target = event.getCurrentTarget();
+          return cbFunc(target);
         }
       });
       return cc.eventManager.addListener(listener, targetNode);
@@ -39,6 +41,7 @@
         event: cc.EventListener.TOUCH_ONE_BY_ONE,
         swallowTouches: true,
         onTouchBegan: function(touch, event) {
+          jlog.i("kkkkkkkkkkkkkkkkkkkk");
           return true;
         },
         onTouchMoved: function(touch, event) {

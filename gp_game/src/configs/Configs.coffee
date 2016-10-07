@@ -24,6 +24,8 @@ _Configs = cc.Class.extend
   mBorderX            :     0     # 左右边距
   mBorderY            :     0     # 上下边距
 
+  mStyle              :     ["Joy", "Sweet", "Romantic", "Meek", "Elegant"]
+
 
   ctor : ->
     # Setup the resolution policy and design resolution size
@@ -66,7 +68,8 @@ _Configs = cc.Class.extend
   # 根据当前关卡设置颜色
   setColors : (level) ->
     level -= 1
-    colors = @mSettings[Keys.LEVELS][Math.floor(level / 10)][Keys.COLORS]
+    # TODO
+    colors = @mSettings[Keys.LEVELS][Math.floor(level / 5)][Keys.COLORS]
     @mColors = null
     @mColors = []
     for c in colors

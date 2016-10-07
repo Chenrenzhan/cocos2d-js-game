@@ -28,7 +28,6 @@
     playBgm: function() {
       if (!this.mIsBgOlaying) {
         cc.audioEngine.playMusic(this.mBgMusic, true);
-        this.saveIsBgmPlay(true);
         return this.mIsBgOlaying = true;
       }
     },
@@ -47,7 +46,6 @@
     stopBgm: function() {
       if (Configs.mIsBgmPlay) {
         cc.audioEngine.stopMusic();
-        this.saveIsBgmPlay(false);
         return this.mIsBgOlaying = false;
       }
     },

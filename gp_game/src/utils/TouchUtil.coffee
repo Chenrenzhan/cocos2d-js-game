@@ -25,7 +25,8 @@
 
       onTouchEnded : (touch, event) ->
 #        jlog.i "click end"
-        cbFunc()
+        target = event.getCurrentTarget()
+        cbFunc(target)
 #        ccUtil.callFunc(cbFunc, "模拟点击事件 ")
 
     cc.eventManager.addListener(listener, targetNode)
@@ -35,6 +36,7 @@
       event: cc.EventListener.TOUCH_ONE_BY_ONE,
       swallowTouches: true,
       onTouchBegan : (touch, event) ->
+        jlog.i "kkkkkkkkkkkkkkkkkkkk"
         return true
       onTouchMoved : (touch, event) ->
         target = event.getCurrentTarget()

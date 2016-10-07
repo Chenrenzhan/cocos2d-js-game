@@ -4,5 +4,5 @@
 
 @OnOff =
   staticClass    :     true    # 静态类
-  isDebug   :   false   # 是否为debug模式，发布时置为false
-  isLogOpen :   false   # 是否打开log输出，发布时置为false
+  isDebug   :   true   # 是否为debug模式，发布时置为false
+  isLogOpen :   true   # 是否打开log输出，发布时置为false

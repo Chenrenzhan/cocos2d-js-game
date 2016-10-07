@@ -29,6 +29,8 @@
     sequence = cc.sequence(whiteTint, tintAction, ccUtil.callFunc(cbFunc, "turnCellAction "))
     return sequence
 
+
+
   # 边缘发光
   shaderOutlineShine : (sprite) ->
     if( cc.sys.capabilities.opengl )

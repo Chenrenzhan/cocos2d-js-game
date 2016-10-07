@@ -63,10 +63,11 @@
       index = Configs.mData[Keys.MUSIC] ? 0 : 1;
       this.mMusic = this.createToggle(index, function() {
         jlog.i("打开音乐");
-        return AudioManager.playBgm();
+        return AudioManager.saveIsBgmPlay(true);
       }, function() {
         jlog.i("关闭音乐");
-        return AudioManager.stopBgm();
+        AudioManager.stopBgm();
+        return AudioManager.saveIsBgmPlay(false);
       });
       this.mMusic.attr({
         anchorX: 1,

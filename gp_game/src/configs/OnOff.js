@@ -7,8 +7,8 @@
 (function() {
   this.OnOff = {
     staticClass: true,
-    isDebug: false,
-    isLogOpen: false
+    isDebug: true,
+    isLogOpen: true
   };
 
 }).call(this);

@@ -65,7 +65,7 @@
       self = this;
       return this.mBtnBackward.addTouchEventListener(function(touch, event) {
         if (event === ccui.Widget.TOUCH_ENDED) {
-          return cc.director.runScene(new MainScene());
+          return cc.director.runScene(new MainScene1());
         }
       }, this.mBtnBackward);
     },

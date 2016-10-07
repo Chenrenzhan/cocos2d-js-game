@@ -24,6 +24,7 @@
     mOnColorChange: null,
     mOnStepChange: null,
     mOnScoreChange: null,
+    mReleaseMagicCb: null,
     ctor: function() {
       this._super();
       this.initSize();
@@ -69,7 +70,7 @@
       this.mSwapCells = null;
       this.mSwapCells = [];
       this.mChessColorRecord = [];
-      this.mScoresRecord.length = [];
+      this.mScoresRecord = [];
       this.mGoalColorSumRecord = [];
       for (i = l = 0, ref = Configs.mCellSumX; 0 <= ref ? l < ref : l > ref; i = 0 <= ref ? ++l : --l) {
         for (j = m = 0, ref1 = Configs.mCellSumY; 0 <= ref1 ? m < ref1 : m > ref1; j = 0 <= ref1 ? ++m : --m) {
@@ -108,10 +109,12 @@
                 self.mDownCell = self.mCells[ret.i][ret.j];
                 if (self.mDownCell.mColorIndex !== self.mGoalColorIndex) {
                   self.mHadSelectMagic = false;
+                  self.mReleaseMagicCb();
                   self.useMagic(self.mDownCell);
                   return false;
                 }
                 self.mHadSelectMagic = false;
+                self.mReleaseMagicCb();
               }
               if (self.mDownCell != null) {
                 if (GameUtil.isAdjacentSide(self.mDownCell.mX, self.mDownCell.mY, ret.i, ret.j) !== GameUtil.DIRECTION.none) {
@@ -449,6 +452,9 @@
     },
     selectMagic: function() {
       return this.mHadSelectMagic = true;
+    },
+    setReleaseMagicCb: function(cb) {
+      return this.mReleaseMagicCb = cb;
     }
   });
 

@@ -50,10 +50,13 @@
         "src/layers/LayerBase.js",
         "src/layers/PopLayerBase.js",
         "src/layers/LoadingLayer.js",
+        "src/layers/LevelLayer.js",
 
         "src/scenes/LoaderScene.js",
         "src/scenes/MainScene.js",
+        "src/scenes/MainScene1.js",
         "src/scenes/PlayingGameScene.js",
+        "src/scenes/StartGameScene.js",
 
         "src/widgets/PropsScrollView.js",
         "src/widgets/ChessboardView.js",

@@ -30,8 +30,9 @@
   addTip : ->
     @mTipSprite = new cc.Sprite(resImg.loading_tip)
     @mTipSprite.attr
-      x : cc.winSize.width - 50
-      y : cc.winSize.height - 50
+
+      x : cc.winSize.width / 2 + 125
+      y : cc.winSize.height / 2 + 80
     @addChild(@mTipSprite)
     @mTipSprite.runAction(ActionManager.rotateAction())
 

@@ -26,6 +26,14 @@ var resImg = {
     friend              :    "res/img/friend.png",
     toggle_no           :    "res/img/toggle_no.png",
     toggle_off          :    "res/img/toggle_off.png",
+    close_white          :    "res/img/close_white.png",
+    next_step          :    "res/img/next_step.png",
+    weixin          :    "res/img/weixin.png",
+    qq          :    "res/img/qq.png",
+    win_cat          :    "res/img/win_cat.png",
+    lose_cat          :    "res/img/lose_cat.png",
+    start          :    "res/img/start.png",
+    next_level          :    "res/img/next_level.png",
 
 };
 

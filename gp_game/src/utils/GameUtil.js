@@ -306,12 +306,13 @@
     },
     getFromFormula: function(level, key, formula, defaultValue) {
       var bigLevel, e, error, i, jsonObj, sum, value;
-      bigLevel = Math.floor(level / 10);
+      level--;
+      bigLevel = Math.floor(level / 5);
       value = parseInt(Configs.mSettings[Keys.LEVELS][bigLevel][key]);
       if (value <= 0) {
         return defaultValue;
       } else {
-        i = level % 10;
+        i = level % 5;
         jsonObj = Configs.mSettings;
         sum = value;
         try {

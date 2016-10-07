@@ -34,8 +34,8 @@
     addTip: function() {
       this.mTipSprite = new cc.Sprite(resImg.loading_tip);
       this.mTipSprite.attr({
-        x: cc.winSize.width - 50,
-        y: cc.winSize.height - 50
+        x: cc.winSize.width / 2 + 125,
+        y: cc.winSize.height / 2 + 80
       });
       this.addChild(this.mTipSprite);
       return this.mTipSprite.runAction(ActionManager.rotateAction());

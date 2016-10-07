@@ -63,7 +63,7 @@
     self = @
     @mBtnBackward.addTouchEventListener (touch, event)->
       if event is ccui.Widget.TOUCH_ENDED
-        cc.director.runScene(new MainScene())
+        cc.director.runScene(new MainScene1())
     , @mBtnBackward
 
   setReplayCb : (fun) ->
